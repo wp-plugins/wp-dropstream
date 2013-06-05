@@ -4,7 +4,7 @@ Donate link: http://getdropstream.com/merchants
 Tags: e-commerce, ecommerce, fulfillment, wp-e-commerce, woocommerce
 Requires at least: 3.5
 Tested up to: 3.5.1
-Stable tag: 0.0.1
+Stable tag: 0.0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,17 +18,20 @@ Dropstream is the solution for growing merchants that are looking to outsource o
 
 Dropstream is the best way to integrate and automate your entire order fulfillment workflow. It provides everything you need to put your logistics on auto-pilot.
 
-* Forward orders to your fulfillment center
-* Send tracking numbers back to Shopify, and notify customers
+* Automatically forward orders to your fulfillment center
+* Send tracking numbers back to your shopping cart, and notify customers
 * Update product inventory levels
 
 = See what others say about Dropstream =
 
-> We were hampered by data entry work-arounds, until Dropstream tore down the technical wall that stood between us and our customers. -- Clay Clarkson, Whole Heart Ministries
+> We were hampered by data entry work-arounds, until Dropstream tore down the technical wall that stood between us and our customers. 
+> -- Clay Clarkson, Whole Heart Ministries
 
-> Dropstream is a useful capability that gives us greater flexibility in meeting our fulfillment requirements. The service was easy to set up and has been very reliable. -- Scott Madsen, National Imports LLC
 
-= Get Started With Your Free Trial =
+> Dropstream is a useful capability that gives us greater flexibility in meeting our fulfillment requirements. The service was easy to set up and has been very reliable. 
+> -- Scott Madsen, National Imports LLC
+
+= Get Started With Your Free 14-day Trial =
 
 Dropstream connects with many fulfillment centers. You can see a [full list of connectors](http://getdropstream.com/merchants/supported-connectors "Dropstream for Merchants eCommerce connectors") on our website. Don't see your fulfillment center listed? [Contact us](http://getdropstream.com/merchants/contact-us "Contact Dropstream") and we'll add it, free of charge.
 
@@ -40,6 +43,8 @@ Dropstream connects with many fulfillment centers. You can see a [full list of c
 * PHP version 5.2.4 or greater
 * MySQL version 5.0 or greater
 * Some payment gateways require fsockopen support (for IPN access)
+* Compatible Wordpress eCommerce plugin. Ex: WP E-Commerce, WooCommerce
+* WP E-Commerce 3.8.9.5 and greater or WooCommerce 2.0.8 and greater
 
 = Automatic installation =
 
@@ -61,11 +66,15 @@ The manual installation method involves downloading our plugin and uploading it 
 
 == Frequently Asked Questions ==
 
+= Which WordPress eCommerce Plugin's does this plugin support = 
+
+This plugin supports WP E-Commerce and WooCommerce with an active Dropstream account.
+
 = What do I need to get started? =
 
 You'll an active Dropstream account and need to have a relationship with a fulfillment center that ships your orders to customers. You can see a [full list of fulfillment centers](http://getdropstream.com/merchants/supported-connectors "Dropstream for Merchants eCommerce connectors") on our website. Don't see your fulfillment center listed? [Contact us](http://getdropstream.com/merchants/contact-us "Contact Dropstream") and we'll add it, free of charge.
 
-= Where can I find WooCommerce documentation and user guides =
+= Where can I find Dropstream documentation and user guides =
 
 For help setting up and configuring Dropstream please refer to our [user guide](http://support.getdropstream.com)
 
@@ -78,3 +87,11 @@ For help setting up and configuring Dropstream please refer to our [user guide](
 
 == Changelog ==
 
+= 0.0.2 =
+
+* Support for WooCommerce.
+* Updated WP E-Commerce order data to include customer e-mail address.
+
+= 0.0.1 =
+
+* This is the initial release with support for  WP E-Commerce

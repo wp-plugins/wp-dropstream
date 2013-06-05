@@ -25,6 +25,7 @@ class WPECommerceAdapter implements iAdapter {
       }
       
       $addresses = $checkoutForm->get_gateway_data();
+
       $order = array(
         'id' => $purchase_log->id,
         'date' => date('Y-m-d h:i:s A', $purchase_log->date),
@@ -33,7 +34,7 @@ class WPECommerceAdapter implements iAdapter {
         'status' => $purchase_log->processed,
         'notes' => $purchase_log->notes,
         'plugin_version' => $purchase_log->plugin_version,
-        
+        'email' => $checkoutForm->get('billingemail'),
         'billing_address' => $addresses['billing_address'],
         'shipping_address' => $addresses['shipping_address'],
         'order_items' => $order_items
@@ -56,7 +57,7 @@ class WPECommerceAdapter implements iAdapter {
     return $purchaseLog->save();
   }
   
-  public function createOrderTracking($order_id, $tracking_number, $send_email = true) {
+  public function createOrderTracking($order_id, $tracking_number, $carrier, $send_email = true) {
     require_once( WP_PLUGIN_DIR."/wp-e-commerce/wpsc-includes/purchase-log.class.php" );
     
     $purchaseLog = new WPSC_Purchase_Log($order_id);
