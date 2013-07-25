@@ -85,6 +85,9 @@ class WoocommerceAdapter implements iAdapter {
   private static function format_order($_order) {
   	$order = new stdClass;
   	$order->id = $_order->id;
+  	if(is_plugin_active('woocommerce-sequential-order-numbers-pro/woocommerce-sequential-order-numbers.php')) {
+  	  $order->display_id = ltrim( $_order->get_order_number(), _x( '#', 'hash before order number', 'woocommerce' ) );
+	  }
   	$order->status = $_order->status;
   	$order->email = $_order->billing_email;
   	$order->date = $_order->order_date;
