@@ -123,17 +123,30 @@ class WoocommerceAdapter implements iAdapter {
   	$order->order_items = array();
   	foreach($_order->get_items() as $_item) {
   	  $product = self::get_product_by_id($_item['product_id']);
-  	  
+
   		$item = new stdClass;
   		$item->order_product_id = $_item['product_id'];
   		$item->name = $_item['name'];
-  		$item->sku = $product->get_sku();
+  		$item->sku = self::format_order_item_sku($_item);
   		$item->quantity = $_item['qty'];
   		$item->price = $product->get_price();
 
   		$order->order_items[] = $item;
   	}
   	return $order;
+  }
+  
+  private static function format_order_item_sku($item) {
+    $product = self::get_product_by_id($item['product_id']);
+    if($product->product_type == 'simple') {
+      return $product->get_sku();
+    } else if($product->product_type == 'variable') {
+      $variation = new WC_Product_variation($item['variation_id']);
+      
+      return $product->get_sku()."".$variation->get_sku();
+    }
+    // group products can only contain simple products and will be caught above
+    return NULL;
   }
   
 }

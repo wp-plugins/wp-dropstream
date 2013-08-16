@@ -3,7 +3,7 @@
 Plugin Name: WP-Dropstream
 Plugin URI: http://getdropstream.com/merchants
 Description: A brief description of the Plugin.
-Version: 0.5.0
+Version: 0.5.5
 Author: Dropstream
 Author URI: http://getdropstream.com
 License: http://getdropstream.com/terms
