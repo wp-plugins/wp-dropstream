@@ -5,6 +5,7 @@ require('adapter.php');
 class WoocommerceAdapter implements iAdapter {
   
   public function getOrders($status, $created_after) {
+
     $orders = array('orders' => array());
 
     $order_query = new WP_Query(array('post_type' => 'shop_order', 'posts_per_page' => '-1',
@@ -21,7 +22,7 @@ class WoocommerceAdapter implements iAdapter {
                 'terms' =>  array($status),
                 'operator' => 'AND' )
         )));
-    
+
     if( $order_query->have_posts() ) {
 
       while ($order_query->have_posts()) : $order_query->the_post(); 
