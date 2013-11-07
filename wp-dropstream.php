@@ -3,7 +3,7 @@
 Plugin Name: WP-Dropstream
 Plugin URI: http://getdropstream.com/merchants
 Description: A brief description of the Plugin.
-Version: 0.5.5
+Version: 0.6.0
 Author: Dropstream
 Author URI: http://getdropstream.com
 License: http://getdropstream.com/terms
@@ -44,7 +44,7 @@ class Dropstream {
       return $wp_xmlrpc_server->error;
     }
 
-    return '0.0.2';
+    return '0.6.0';
   }
   
   public function dropstream_getOrders($args) {
@@ -59,7 +59,8 @@ class Dropstream {
     }
     
     $status = $args['params']['status'];
-    return $this->get_adapter_instance()->getOrders($status);
+    $created_after = $args['params']['created_after'];
+    return $this->get_adapter_instance()->getOrders($status, $created_after);
   }
 
   public function dropstream_updateOrderStatus($args) {

@@ -4,7 +4,7 @@ require('adapter.php');
 require_once( WP_PLUGIN_DIR."/wp-e-commerce/wpsc-core/wpsc-constants.php" );
 class WPECommerceAdapter implements iAdapter {
   
-  public function getOrders($status) {
+  public function getOrders($status, $created_after) {
     require_once( WP_PLUGIN_DIR."/wp-e-commerce/wpsc-includes/purchaselogs.class.php" );
     require_once( WP_PLUGIN_DIR."/wp-e-commerce/wpsc-includes/meta.functions.php" );
     global $wpdb;

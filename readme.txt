@@ -4,7 +4,7 @@ Donate link: http://getdropstream.com/merchants
 Tags: e-commerce, ecommerce, fulfillment, wp-e-commerce, woocommerce, fulfillment by amazon
 Requires at least: 3.5
 Tested up to: 3.6.0
-Stable tag: 0.5.5
+Stable tag: 0.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,10 @@ For help setting up and configuring Dropstream please refer to our [user guide](
 4. Tracking numbers are automatically sent back to your shopping cart
 
 == Changelog ==
+
+= 0.6.0
+* Added additional order search filter for WooCommerce. NOTE: Only available on WP 3.7 or higher
+* Fix for WooCommerce order search only returning top 10 orders
 
 = 0.5.5 =
 * Added support for WooCommerce Variable product types
