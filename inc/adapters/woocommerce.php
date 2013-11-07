@@ -4,17 +4,23 @@ require('adapter.php');
 
 class WoocommerceAdapter implements iAdapter {
   
-  public function getOrders($status) {
+  public function getOrders($status, $created_after) {
     $orders = array('orders' => array());
 
-    $order_query = new WP_Query(array('post_type' => 'shop_order', 'tax_query' => array(
+    $order_query = new WP_Query(array('post_type' => 'shop_order', 'posts_per_page' => '-1',
+    'date_query' => array(
+    		array(
+    			'after'     => $created_after,
+    			'inclusive' => true,
+    		),
+    	),
+    'tax_query' => array(
             array(
                 'taxonomy' => 'shop_order_status',
                 'field' => 'slug',
                 'terms' =>  array($status),
                 'operator' => 'AND' )
         )));
-        
     
     if( $order_query->have_posts() ) {
 
