@@ -22,6 +22,8 @@ class WoocommerceAdapter implements iAdapter {
                 'terms' =>  array($status),
                 'operator' => 'AND' )
         )));
+    
+    _log('Executing query. '.$order_query->request);
 
     if( $order_query->have_posts() ) {
 
@@ -33,6 +35,7 @@ class WoocommerceAdapter implements iAdapter {
       endwhile;
     }
 
+    _log('Completed getOrders method');
     return $orders;
    }
   
@@ -95,6 +98,8 @@ class WoocommerceAdapter implements iAdapter {
   	if(is_plugin_active('woocommerce-sequential-order-numbers-pro/woocommerce-sequential-order-numbers.php')) {
   	  $order->display_id = ltrim( $_order->get_order_number(), _x( '#', 'hash before order number', 'woocommerce' ) );
 	  }
+    _log('Preparing to format order. order_id='.$_order->id);
+
   	$order->status = $_order->status;
   	$order->email = $_order->billing_email;
   	$order->date = $_order->order_date;
@@ -139,7 +144,11 @@ class WoocommerceAdapter implements iAdapter {
   		$item->price = $product->get_price();
 
   		$order->order_items[] = $item;
+
+      _log('  Found order item. order_id='.$_order->id.',sku='.$item->sku);
   	}
+
+    _log('Formatted order. order_id='.$_order->id);
   	return $order;
   }
   
