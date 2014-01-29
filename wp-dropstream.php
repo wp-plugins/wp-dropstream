@@ -3,7 +3,7 @@
 Plugin Name: WP-Dropstream
 Plugin URI: http://getdropstream.com/merchants
 Description: A brief description of the Plugin.
-Version: 0.6.2
+Version: 0.6.3
 Author: Dropstream
 Author URI: http://getdropstream.com
 License: http://getdropstream.com/terms
@@ -44,7 +44,7 @@ class Dropstream {
       return $wp_xmlrpc_server->error;
     }
 
-    return '0.6.2';
+    return '0.6.3';
   }
   
   public function dropstream_getOrders($args) {
@@ -144,12 +144,23 @@ class Dropstream {
     }
     return $wp_xmlrpc_server->error; // TODO return a helpful message
   }
-  
+
 }
 
-function init_dropstream() {
+function install_dropstream() {
+  # add custom acknowledgement status
+  if(is_plugin_active('woocommerce/woocommerce.php')) {
+    if(!term_exists('awaiting-fulfillment', 'shop_order_status')) {
+      _log('Dropstream shop_order_status does not exists....adding status.');
+      wp_insert_term('awaiting-fulfillment', 'shop_order_status');
+    }
+  }  
+}
+add_action( 'admin_init' , 'install_dropstream');
+
+function load_dropstream() {
   $dropstream =  Dropstream::get_instance();
 }
-add_action( 'plugins_loaded' , 'init_dropstream');
+add_action( 'plugins_loaded' , 'load_dropstream');
 
 ?>
