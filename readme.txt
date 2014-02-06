@@ -4,7 +4,7 @@ Donate link: http://getdropstream.com/merchants
 Tags: e-commerce, ecommerce, fulfillment, wp-e-commerce, woocommerce, fulfillment by amazon
 Requires at least: 3.5
 Tested up to: 3.8.0
-Stable tag: 0.6.3
+Stable tag: 0.6.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 

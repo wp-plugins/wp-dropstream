@@ -11,6 +11,7 @@ class WoocommerceAdapter implements iAdapter {
     $order_query = new WP_Query(array('post_type' => 'shop_order', 'posts_per_page' => '-1',
     'date_query' => array(
     		array(
+          'column'    => 'post_modified_gmt',
     			'after'     => $created_after,
     			'inclusive' => true,
     		),
