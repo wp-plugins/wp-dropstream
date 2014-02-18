@@ -105,8 +105,7 @@ class WoocommerceAdapter implements iAdapter {
   	$order->email = $_order->billing_email;
   	$order->date = $_order->order_date;
   	$order->notes = $_order->customer_note;
-  	$order->shipping_method = $_order->shipping_method;
-  	$order->shipping_method_title = $_order->shipping_method_title;
+  	$order->shipping_method = $_order->get_shipping_method();
   	
   	// billing address
   	$billing_address = new stdClass;
@@ -160,9 +159,9 @@ class WoocommerceAdapter implements iAdapter {
   
   private static function format_order_item_sku($item) {
     $product = self::get_product_by_id($item['product_id']);
-    if($product->product_type == 'simple') {
+    if($product->product_type == 'simple' || $product->product_type == 'subscription') {
       return $product->get_sku();
-    } else if($product->product_type == 'variable') {
+    } else if($product->product_type == 'variable' || $product->product_type == 'variable-subscription') {
       $variation = new WC_Product_variation($item['variation_id']);
       
       return $product->get_sku()."".$variation->get_sku();
