@@ -4,7 +4,7 @@ Donate link: http://getdropstream.com/merchants
 Tags: e-commerce, ecommerce, fulfillment, wp-e-commerce, woocommerce, fulfillment by amazon
 Requires at least: 3.5
 Tested up to: 3.8.0
-Stable tag: 0.6.4
+Stable tag: 0.6.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,10 @@ For help setting up and configuring Dropstream please refer to our [user guide](
 4. Tracking numbers are automatically sent back to your shopping cart
 
 == Changelog ==
+= 0.6.5
+* Added support for WooCommerce subscription.
+* Change to use WooCommerce shipping method title, rather than shipping method id. **NOTE** Dropstream rules will need to be updated.
+
 = 0.6.3
 * Added custom order status for WooCommerce 'awaiting-fulfillment'. This order status will be used to acknowledge orders have been received by the fulfillment center.
 
