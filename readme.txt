@@ -4,7 +4,7 @@ Donate link: http://getdropstream.com/merchants
 Tags: e-commerce, ecommerce, fulfillment, wp-e-commerce, woocommerce, fulfillment by amazon
 Requires at least: 3.5
 Tested up to: 3.9.0
-Stable tag: 0.6.6
+Stable tag: 0.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,9 @@ For help setting up and configuring Dropstream please refer to our [user guide](
 4. Tracking numbers are automatically sent back to your shopping cart
 
 == Changelog ==
+= 0.7.0
+* Added support for additional WooCommerce order fields, including discounts, taxes, and coupons. WooCommerce 2.1 or greater is required
+
 = 0.6.6
 * Bump for WP 3.9 and WooCommerce 2.1 support
 

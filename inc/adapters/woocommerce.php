@@ -106,6 +106,11 @@ class WoocommerceAdapter implements iAdapter {
   	$order->date = $_order->order_date;
   	$order->notes = $_order->customer_note;
   	$order->shipping_method = $_order->get_shipping_method();
+    $order->shipping_amount = $_order->get_total_shipping();
+    $order->shipping_tax = $_order->get_shipping_tax();
+    $order->tax_amount = $_order->get_total_tax();
+    $order->discount_amount = $_order->get_total_discount();
+    $order->coupons = $_order->get_used_coupons();
   	
   	// billing address
   	$billing_address = new stdClass;
@@ -147,7 +152,6 @@ class WoocommerceAdapter implements iAdapter {
   		$item->sku = self::format_order_item_sku($_item);
   		$item->quantity = $_item['qty'];
   		$item->price = $product->get_price();
-
   		$order->order_items[] = $item;
 
       _log('  Found order item. order_id='.$_order->id.',sku='.$item->sku);
