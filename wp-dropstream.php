@@ -3,7 +3,7 @@
 Plugin Name: WP-Dropstream
 Plugin URI: http://getdropstream.com/merchants
 Description: A brief description of the Plugin.
-Version: 0.7.0
+Version: 0.7.1
 Author: Dropstream
 Author URI: http://getdropstream.com
 License: http://getdropstream.com/terms
@@ -162,5 +162,11 @@ function load_dropstream() {
   $dropstream =  Dropstream::get_instance();
 }
 add_action( 'plugins_loaded' , 'load_dropstream');
+
+function add_customs_order_statuses_to_woocommerce_reports($statuses) {
+  array_push($statuses, 'awaiting-fulfillment');
+  return $statuses;
+}
+add_filter( 'woocommerce_reports_order_statuses', 'add_customs_order_statuses_to_woocommerce_reports');
 
 ?>
