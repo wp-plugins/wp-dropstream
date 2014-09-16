@@ -4,26 +4,37 @@ require('adapter.php');
 
 class WoocommerceAdapter implements iAdapter {
   
-  public function getOrders($status, $created_after) {
+  public function getOrders($status, $updated_after) {
 
     $orders = array('orders' => array());
 
-    $order_query = new WP_Query(array('post_type' => 'shop_order', 'posts_per_page' => '-1',
-    'date_query' => array(
-    		array(
-          'column'    => 'post_modified_gmt',
-    			'after'     => $created_after,
-    			'inclusive' => true,
-    		),
-    	),
-    'tax_query' => array(
+    $order_query = NULL;
+    if(is_pangolin()) {
+      $order_query = new WP_Query(array('post_type' => 'shop_order', 'post_status' => array('wc-'.$status), 'posts_per_page' => '-1',
+      'date_query' => array(
+      		array(
+            'column'    => 'post_modified_gmt',
+      			'after'     => $updated_after,
+      			'inclusive' => true,
+      		),
+      	)));
+    } else {
+      $order_query = new WP_Query(array('post_type' => 'shop_order', 'posts_per_page' => '-1',
+        'date_query' => array(
             array(
-                'taxonomy' => 'shop_order_status',
-                'field' => 'slug',
-                'terms' =>  array($status),
-                'operator' => 'AND' )
-        )));
-    
+              'column'    => 'post_modified_gmt',
+              'after'     => $updated_after,
+              'inclusive' => true,
+            ),
+          ),
+        'tax_query' => array(
+                array(
+                    'taxonomy' => 'shop_order_status',
+                    'field' => 'slug',
+                    'terms' =>  array($status),
+                    'operator' => 'AND' )
+            )));
+    }
     _log('Executing query. '.$order_query->request);
 
     if( $order_query->have_posts() ) {
@@ -46,7 +57,10 @@ class WoocommerceAdapter implements iAdapter {
     if(!$wc_order->get_order($id)) {
       return new IXR_Error( 404, __( 'Selected order could not be found' ) );
     }
-    
+
+    if($status == 'awaiting-fulfillment' && is_pangolin()) {
+      $status = 'wc-awaiting-shipment';
+    }
     return $wc_order->update_status($status);
   }
   
