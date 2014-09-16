@@ -3,7 +3,7 @@
 Plugin Name: WP-Dropstream
 Plugin URI: http://getdropstream.com/merchants
 Description: A brief description of the Plugin.
-Version: 0.7.2
+Version: 0.8.0
 Author: Dropstream
 Author URI: http://getdropstream.com
 License: http://getdropstream.com/terms
@@ -18,6 +18,33 @@ function _log( $message ) {
       error_log( $message );
     }
   }
+}
+
+/*
+  Returns true if the WooCommerce version is greater than or equal to 2.2.
+  False otherwise
+*/
+function is_pangolin() {
+  if(! is_plugin_active('woocommerce/woocommerce.php')) {
+    return false; 
+  }
+  $plugin_data = get_plugin_data( ABSPATH . 'wp-content/plugins/woocommerce/woocommerce.php' );
+  _log($plugin_data);
+  $woocommerce_version = $plugin_data['Version'];
+
+  return version_compare($woocommerce_version, '2.2', '>=');
+}
+
+/**
+* Returns current plugin version.
+*
+* @return string Plugin version
+*/
+function plugin_get_version() {
+  $plugin_data = get_plugin_data( __FILE__ );
+  $plugin_version = $plugin_data['Version'];
+
+  return $plugin_version;
 }
 
 class Dropstream {
@@ -43,8 +70,8 @@ class Dropstream {
     if ( ! $wp_xmlrpc_server->login( $username, $password ) ) {
       return $wp_xmlrpc_server->error;
     }
-
-    return '0.6.3';
+    is_pangolin();
+    return plugin_get_version();
   }
   
   public function dropstream_getOrders($args) {
@@ -147,12 +174,35 @@ class Dropstream {
 
 }
 
+function register_woocommerce_pangolin_order_statuses() {
+  # is_plugin_active is not available until after init
+  # we use this check to avoid causing an error when not woocommerce_pangolin
+  if(function_exists('register_post_status')) {
+    register_post_status( 'wc-awaiting-shipment', array(
+        'label'                     => _x( 'Awaiting fulfillment', 'Order status', 'woocommerce' ),
+        'public'                    => true,
+        'exclude_from_search'       => false,
+        'show_in_admin_all_list'    => true,
+        'show_in_admin_status_list' => true,
+        'label_count'               => _n_noop( 'Awaiting fulfillment <span class="count">(%s)</span>', 'Awaiting fulfillment <span class="count">(%s)</span>', 'woocommerce' )
+      ) );
+  }
+}
+add_action( 'init', 'register_woocommerce_pangolin_order_statuses' );
+
 function install_dropstream() {
   # add custom acknowledgement status
   if(is_plugin_active('woocommerce/woocommerce.php')) {
-    if(!term_exists('awaiting-fulfillment', 'shop_order_status')) {
-      _log('Dropstream shop_order_status does not exists....adding status.');
+
+    if(!term_exists('awaiting-fulfillment', 'shop_order_status') && !is_pangolin()) {
       wp_insert_term('awaiting-fulfillment', 'shop_order_status');
+    }
+
+    if (is_pangolin()) {
+      add_filter('woocommerce_reports_order_statuses', 'add_customs_order_statuses_to_woocommerce_pangolin_reports');
+      add_filter('wc_order_statuses', 'add_custom_woocommerce_pangolin_order_statuses');
+    } else {
+      add_filter( 'woocommerce_reports_order_statuses', 'add_customs_order_statuses_to_woocommerce_reports');
     }
   }  
 }
@@ -167,6 +217,16 @@ function add_customs_order_statuses_to_woocommerce_reports($statuses) {
   array_push($statuses, 'awaiting-fulfillment');
   return $statuses;
 }
-add_filter( 'woocommerce_reports_order_statuses', 'add_customs_order_statuses_to_woocommerce_reports');
+
+function add_customs_order_statuses_to_woocommerce_pangolin_reports($statuses) {
+  array_push($statuses, 'awaiting-shipment');
+  return $statuses;
+}
+
+function add_custom_woocommerce_pangolin_order_statuses($statuses) {
+  $statuses['wc-awaiting-shipment']  = _x('Awaiting fulfillment', 'Order status', 'woocommerce');
+
+  return $statuses;
+}
 
 ?>
