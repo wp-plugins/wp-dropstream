@@ -155,7 +155,7 @@ class WoocommerceAdapter implements iAdapter {
   	foreach($_order->get_items() as $_item) {
   	  $product = self::get_product_by_id($_item['product_id']);
       
-      if(is_null($product)) {
+      if(is_null($product) || empty($product)) {
         _log('  WARNING: Could not find product. order_id='.$_order->id.',product_id='.$_item['product_id']);
         continue;
       }
