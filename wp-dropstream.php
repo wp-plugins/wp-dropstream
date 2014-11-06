@@ -3,7 +3,7 @@
 Plugin Name: WP-Dropstream
 Plugin URI: http://getdropstream.com/merchants
 Description: A brief description of the Plugin.
-Version: 0.8.0
+Version: 0.8.2
 Author: Dropstream
 Author URI: http://getdropstream.com
 License: http://getdropstream.com/terms
@@ -29,7 +29,7 @@ function is_pangolin() {
     return false; 
   }
   $plugin_data = get_plugin_data( ABSPATH . 'wp-content/plugins/woocommerce/woocommerce.php' );
-  _log($plugin_data);
+
   $woocommerce_version = $plugin_data['Version'];
 
   return version_compare($woocommerce_version, '2.2', '>=');
@@ -70,8 +70,17 @@ class Dropstream {
     if ( ! $wp_xmlrpc_server->login( $username, $password ) ) {
       return $wp_xmlrpc_server->error;
     }
-    is_pangolin();
-    return plugin_get_version();
+    
+    $ping_data = array('wp-dropstream-version' => plugin_get_version());
+
+    if(is_plugin_active('wp-e-commerce/wp-shopping-cart.php')) {
+      $plugin_data = get_plugin_data( ABSPATH . 'wp-content/plugins/wp-e-commerce/wp-shopping-cart.php' );
+      $ping_data['wp-e-commerce-version'] = $plugin_data['Version'];
+    } elseif(is_plugin_active('woocommerce/woocommerce.php')) {
+      $plugin_data = get_plugin_data( ABSPATH . 'wp-content/plugins/woocommerce/woocommerce.php' );
+      $ping_data['woocommerce-version'] = $plugin_data['Version'];
+    }
+    return $ping_data;
   }
   
   public function dropstream_getOrders($args) {
@@ -219,7 +228,9 @@ function add_customs_order_statuses_to_woocommerce_reports($statuses) {
 }
 
 function add_customs_order_statuses_to_woocommerce_pangolin_reports($statuses) {
-  array_push($statuses, 'awaiting-shipment');
+  if(is_array($statuses)) {
+    array_push($statuses, 'awaiting-shipment');
+  }
   return $statuses;
 }
 

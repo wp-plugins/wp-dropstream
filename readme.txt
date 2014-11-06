@@ -4,7 +4,7 @@ Donate link: http://getdropstream.com/merchants
 Tags: e-commerce, ecommerce, fulfillment, wp-e-commerce, woocommerce, fulfillment by amazon
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 0.8.0
+Stable tag: 0.8.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,12 @@ For help setting up and configuring Dropstream please refer to our [user guide](
 4. Tracking numbers are automatically sent back to your shopping cart
 
 == Changelog ==
+= 0.8.2
+* Fixed PHP Warning for WooCommerce 2.2.8 Order Reports
+
+= 0.8.1
+* Fixed problem where WooCommerce order item references deleted product
+
 = 0.8.0
 * Added support for Woocommerce 2.2.x
 
