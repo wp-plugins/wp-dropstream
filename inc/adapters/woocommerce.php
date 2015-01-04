@@ -143,6 +143,7 @@ class WoocommerceAdapter implements iAdapter {
   	$shipping_address = new stdClass;
   	$shipping_address->first_name = $_order->shipping_first_name;
   	$shipping_address->last_name = $_order->shipping_last_name;
+    $shipping_address->phone = $_order->billing_phone;
   	$shipping_address->company = $_order->shipping_company;
   	$shipping_address->street = $_order->shipping_address_1."\r\n".$_order->shipping_address_2;
   	$shipping_address->city = $_order->shipping_city;
