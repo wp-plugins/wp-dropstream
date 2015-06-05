@@ -112,7 +112,9 @@ class WoocommerceAdapter implements iAdapter {
   	$order->id = $_order->id;
   	if(is_plugin_active('woocommerce-sequential-order-numbers-pro/woocommerce-sequential-order-numbers.php')) {
   	  $order->display_id = ltrim( $_order->get_order_number(), _x( '#', 'hash before order number', 'woocommerce' ) );
-	  }
+	  } else if(is_plugin_active('woocommerce-sequential-order-numbers/woocommerce-sequential-order-numbers.php')) {
+      $order->display_id = ltrim( $_order->get_order_number(), _x( '#', 'hash before order number', 'woocommerce' ) );
+    }
     _log('Preparing to format order. order_id='.$_order->id);
 
   	$order->status = $_order->status;
