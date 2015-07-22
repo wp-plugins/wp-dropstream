@@ -3,7 +3,7 @@
 Plugin Name: WP-Dropstream
 Plugin URI: http://getdropstream.com/merchants
 Description: A brief description of the Plugin.
-Version: 0.8.4
+Version: 0.8.5
 Author: Dropstream
 Author URI: http://getdropstream.com
 License: http://getdropstream.com/terms
@@ -28,7 +28,7 @@ function is_pangolin() {
   if(! is_plugin_active('woocommerce/woocommerce.php')) {
     return false; 
   }
-  $plugin_data = get_plugin_data( ABSPATH . 'wp-content/plugins/woocommerce/woocommerce.php' );
+  $plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/woocommerce/woocommerce.php' );
 
   $woocommerce_version = $plugin_data['Version'];
 
